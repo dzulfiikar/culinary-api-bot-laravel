@@ -1,0 +1,69 @@
+version: "3.0"
+services:
+    nginx:
+        build:
+            context: .
+            dockerfile: ./dockerfiles/nginx.dockerfile
+        depends_on:
+            - postgres
+        container_name: laravel_nginx
+        ports:
+            - 80:80
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - laravel-network
+
+    php:
+        build:
+            context: .
+            dockerfile: ./dockerfiles/php.dockerfile
+        container_name: laravel_php
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - laravel-network
+
+    postgres:
+        image: postgres
+        container_name: laravel_postgres
+        environment:
+            POSTGRES_DB: culinary_api_bot_laravel
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: admin123
+        networks:
+            - laravel-network
+
+    composer:
+        image: composer:latest
+        container_name: laravel_composer
+        volumes:
+            - ./:/var/www/html
+        working_dir: /var/www/html
+        networks:
+            - laravel-network
+
+    artisan:
+        build:
+            context: .
+            dockerfile: ./dockerfiles/php.dockerfile
+        container_name: laravel_artisan
+        volumes:
+            - ./:/var/www/html
+        working_dir: /var/www/html
+        entrypoint: ["php", "artisan"]
+        networks:
+            - laravel-network
+
+    npm:
+        image: node:current-alpine
+        container_name: laravel_npm
+        volumes:
+            - ./:/var/www/html
+        working_dir: /var/www/html
+        entrypoint: ["npm"]
+        networks:
+            - laravel-network
+
+networks:
+    laravel-network:
