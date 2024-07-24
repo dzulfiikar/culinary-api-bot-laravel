@@ -9,6 +9,6 @@ Route::prefix('v1')->group(function () {
 
     Route::get('telegram', [BotController::class, 'show']);
     Route::post('telegram/start', [BotController::class, 'start']);
-});
+})->middleware(\Spatie\HttpLogger\Middlewares\HttpLogger::class);
 
 Route::post('telegram/webhook', [BotController::class, 'handleWebhook']);

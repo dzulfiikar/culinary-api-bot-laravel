@@ -10,7 +10,9 @@
         "laravel/framework": "^11.9",
         "laravel/passport": "^12.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9"
+        "laravel/telescope": "^5.1",
+        "laravel/tinker": "^2.9",
+        "spatie/laravel-http-logger": "^1.11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
